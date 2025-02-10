@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Die from "./components/Die";
-
+import { nanoid } from "nanoid";
 function App() {
   const [allNewDice, setAllNewDice] = useState(generateAllNewDice());
 
@@ -8,15 +8,40 @@ function App() {
   function generateAllNewDice() {
     const allNewDiceArr = [];
     for (let index = 0; index < 10; index++) {
-      allNewDiceArr.push(Math.ceil(Math.random() * 6));
+      allNewDiceArr.push({
+        value: Math.ceil(Math.random() * 6),
+        isHeld: true,
+        id: nanoid(),
+      });
     }
     return allNewDiceArr;
   }
+
   function rollDice() {
     setAllNewDice(generateAllNewDice());
   }
+  // Function to hold or unhold a die based on its id
+  function hold(id) {
+    setAllNewDice((prevArr) => {
+      return prevArr.map((die) => {
+        if (die.id === id) {
+          return { ...die, isHeld: !die.isHeld };
+        } else {
+          return die;
+        }
+      });
+    });
+  }
   const diceElements = allNewDice.map((die) => {
-    return <Die value={die} />;
+    return (
+      <Die
+        value={die.value}
+        key={die.id}
+        isHeld={die.isHeld}
+        hold={hold}
+        id={die.id}
+      />
+    );
   });
 
   return (
