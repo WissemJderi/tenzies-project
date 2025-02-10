@@ -4,6 +4,10 @@ import { nanoid } from "nanoid";
 function App() {
   const [allNewDice, setAllNewDice] = useState(generateAllNewDice());
 
+  let gameWon =
+    allNewDice.every((die) => die.isHeld) &&
+    allNewDice.every((die) => die.value === allNewDice[0].value);
+
   // Function to generate an array of 10 random dice values between 1 and 6
   function generateAllNewDice() {
     const allNewDiceArr = [];
@@ -59,7 +63,7 @@ function App() {
       </p>
       <div className="container">{diceElements}</div>
       <button className="roll-dice-button" onClick={rollDice}>
-        Roll Dice
+        {gameWon ? "New Game" : "Roll"}
       </button>
     </main>
   );
