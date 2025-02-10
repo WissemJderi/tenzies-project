@@ -5,6 +5,7 @@ import Confetti from "react-confetti";
 function App() {
   const [allNewDice, setAllNewDice] = useState(() => generateAllNewDice());
   const [counter, setCounter] = useState(0);
+  const [mostAttempts, setMostAttempts] = useState(0);
   const buttonRef = useRef(null);
 
   let gameWon =
@@ -21,12 +22,21 @@ function App() {
     const allNewDiceArr = [];
     for (let index = 0; index < 10; index++) {
       allNewDiceArr.push({
-        value: Math.ceil(Math.random() * 6),
+        // Math.ceil(Math.random() * 6)
+        value: 5,
         isHeld: false,
         id: nanoid(),
       });
     }
     return allNewDiceArr;
+  }
+
+  function checkHighestScore() {
+    if (counter > mostAttempts) {
+      setMostAttempts(counter);
+    } else {
+      return mostAttempts;
+    }
   }
 
   function rollDice() {
@@ -42,6 +52,7 @@ function App() {
     } else {
       setAllNewDice(generateAllNewDice());
       setCounter(0);
+      checkHighestScore();
     }
   }
   // Function to hold or unhold a die based on its id
@@ -79,6 +90,7 @@ function App() {
         )}
       </div>
       <h1 className="title">Tenzies</h1>
+      <h2>Most Attempts: {mostAttempts}</h2>
       <p className="instructions">
         Roll until all dice are the same. Click each die to freeze it at its
         current value between rolls
