@@ -1,14 +1,21 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import Die from "./components/Die";
 import { nanoid } from "nanoid";
 import Confetti from "react-confetti";
 function App() {
   const [allNewDice, setAllNewDice] = useState(() => generateAllNewDice());
+  const [counter, setCounter] = useState(0);
+  const buttonRef = useRef(null);
 
   let gameWon =
     allNewDice.every((die) => die.isHeld) &&
     allNewDice.every((die) => die.value === allNewDice[0].value);
 
+  useEffect(() => {
+    if (gameWon) {
+      buttonRef.current.focus();
+    }
+  }, [gameWon]);
   // Function to generate an array of 10 random dice values between 1 and 6
   function generateAllNewDice() {
     const allNewDiceArr = [];
@@ -74,8 +81,12 @@ function App() {
         Roll until all dice are the same. Click each die to freeze it at its
         current value between rolls
       </p>
+      <h3>
+        Rolls:
+        {counter}
+      </h3>
       <div className="container">{diceElements}</div>
-      <button className="roll-dice-button" onClick={rollDice}>
+      <button ref={buttonRef} className="roll-dice-button" onClick={rollDice}>
         {gameWon ? "New Game" : "Roll"}
       </button>
     </main>

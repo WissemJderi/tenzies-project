@@ -31,7 +31,7 @@ div#root {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   grid-template-rows: repeat(2, 1fr);
-  gap: 50px;
+  gap: 40px;
 }
 .container button {
   font-size: 18px;
@@ -59,7 +59,7 @@ div#root {
 }
 .instructions {
   font-weight: 500;
-  margin: 20px;
+  margin: 20px 20px 5px;
   text-align: center;
 }
 .sr-only {
