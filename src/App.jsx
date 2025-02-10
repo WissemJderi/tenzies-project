@@ -10,7 +10,7 @@ function App() {
     for (let index = 0; index < 10; index++) {
       allNewDiceArr.push({
         value: Math.ceil(Math.random() * 6),
-        isHeld: true,
+        isHeld: false,
         id: nanoid(),
       });
     }
@@ -18,7 +18,13 @@ function App() {
   }
 
   function rollDice() {
-    setAllNewDice(generateAllNewDice());
+    setAllNewDice((oldDiceArr) =>
+      oldDiceArr.map((die) => {
+        return die.isHeld
+          ? die
+          : { ...die, value: Math.ceil(Math.random() * 6) };
+      })
+    );
   }
   // Function to hold or unhold a die based on its id
   function hold(id) {
@@ -46,6 +52,11 @@ function App() {
 
   return (
     <main>
+      <h1 className="title">Tenzies</h1>
+      <p className="instructions">
+        Roll until all dice are the same. Click each die to freeze it at its
+        current value between rolls
+      </p>
       <div className="container">{diceElements}</div>
       <button className="roll-dice-button" onClick={rollDice}>
         Roll Dice

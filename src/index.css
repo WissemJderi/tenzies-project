@@ -53,3 +53,12 @@ div#root {
   padding: 10px 30px;
   cursor: pointer;
 }
+.title {
+  font-size: 40px;
+  margin: 0;
+}
+.instructions {
+  font-weight: 500;
+  margin: 20px;
+  text-align: center;
+}
