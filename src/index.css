@@ -18,6 +18,7 @@ main {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
 }
 div#root {
   height: 100%;
@@ -40,5 +41,15 @@ div#root {
   background-color: rgb(230, 229, 229);
   padding: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 6px 5px rgba(0, 0, 0, 0.19);
+  cursor: pointer;
+}
+.roll-dice-button {
+  margin-top: 40px;
+  border: none;
+  background-color: rgb(70, 29, 145);
+  font-size: 2rem;
+  color: white;
+  border-radius: 5px;
+  padding: 10px 30px;
   cursor: pointer;
 }
