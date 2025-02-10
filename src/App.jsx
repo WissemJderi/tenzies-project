@@ -38,8 +38,10 @@ function App() {
             : { ...die, value: Math.ceil(Math.random() * 6) };
         })
       );
+      setCounter(counter + 1);
     } else {
       setAllNewDice(generateAllNewDice());
+      setCounter(0);
     }
   }
   // Function to hold or unhold a die based on its id
