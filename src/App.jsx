@@ -3,7 +3,7 @@ import Die from "./components/Die";
 import { nanoid } from "nanoid";
 import Confetti from "react-confetti";
 function App() {
-  const [allNewDice, setAllNewDice] = useState(generateAllNewDice());
+  const [allNewDice, setAllNewDice] = useState(() => generateAllNewDice());
 
   let gameWon =
     allNewDice.every((die) => die.isHeld) &&
@@ -23,13 +23,17 @@ function App() {
   }
 
   function rollDice() {
-    setAllNewDice((oldDiceArr) =>
-      oldDiceArr.map((die) => {
-        return die.isHeld
-          ? die
-          : { ...die, value: Math.ceil(Math.random() * 6) };
-      })
-    );
+    if (!gameWon) {
+      setAllNewDice((oldDiceArr) =>
+        oldDiceArr.map((die) => {
+          return die.isHeld
+            ? die
+            : { ...die, value: Math.ceil(Math.random() * 6) };
+        })
+      );
+    } else {
+      setAllNewDice(generateAllNewDice());
+    }
   }
   // Function to hold or unhold a die based on its id
   function hold(id) {
@@ -58,6 +62,13 @@ function App() {
   return (
     <main>
       {gameWon && <Confetti numberOfPieces={100} />}
+      <div aria-live="polite" className="sr-only">
+        {gameWon && (
+          <p>
+            Congratulation! You won! Press &quot;New Game&quot; to start again.
+          </p>
+        )}
+      </div>
       <h1 className="title">Tenzies</h1>
       <p className="instructions">
         Roll until all dice are the same. Click each die to freeze it at its
